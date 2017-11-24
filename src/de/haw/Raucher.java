@@ -1,25 +1,36 @@
 package de.haw;
 
+import java.util.ArrayList;
+
 public class Raucher extends Thread{
 
     private String name;
-    private Tisch.Zutat zutat;
+    private Zutat zutat;
+    private Tisch tisch;
 
-    public Raucher(String name, Tisch.Zutat zutat) {
+    public Raucher(String name, Zutat zutat, Tisch tisch) {
         this.name = name;
         this.zutat = zutat;
+        this.tisch = tisch;
     }
 
     @Override
     public void run() {
-        super.run();
+        while (!isInterrupted()) {
+            tisch.begutachteTisch();
+        }
+
+        System.out.println(String.format(SmokerUtil.ANSI_GREEN + "\n%s verlässt den Tisch. (interrupt)" + SmokerUtil.ANSI_RESET, this));
     }
 
-    private void nimmZutaten() {
+    public boolean kannRauchen(ArrayList<Zutat> zutaten) {
+        if (zutaten.isEmpty()) return false;
 
+        return !zutaten.contains(this.zutat);
     }
 
-    private void rauche() {
-
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", name, zutat);
     }
 }
