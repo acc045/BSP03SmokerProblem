@@ -9,7 +9,7 @@ public class Main {
 	    int anzahlRaucher = 3;
 	    int anzahlAgenten = 2;
 
-        Tisch tisch = new Tisch(3,2);
+        Tisch tisch = new Tisch(anzahlRaucher,anzahlAgenten);
 
         for (Agent a : tisch.agenten) {
             System.out.println(String.format("%s setzt sich an den Tisch.", a));
