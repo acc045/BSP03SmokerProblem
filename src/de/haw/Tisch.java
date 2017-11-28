@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class Tisch {
     /* DEMO MODE */
-    private final int FLUSS = 500;
+    private final int FLUSS = 1000;
 
     ArrayList<Raucher> raucher = new ArrayList<>();
     ArrayList<Agent> agenten = new ArrayList<>();
     ArrayList<Zutat> aktuelleZutaten = new ArrayList<>();
 
-    /* false: Agenten sind dran, true: Raucher sind dran */
-    boolean runde = false;
+    boolean rauchend = false;
 
     public Tisch(int anzahlRaucher, int anzahlAgenten) {
         ArrayList<Zutat> zutaten = SmokerUtil.getZutatenlisteGemischt();
@@ -36,6 +35,12 @@ public class Tisch {
 
     public synchronized void begutachteTisch() {
 
+        if (rauchend) try {
+            wait();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         System.out.println(String.format(SmokerUtil.ANSI_BLUE + "\n%s guckt sich den Tisch an..." + SmokerUtil.ANSI_RESET, Thread.currentThread()));
 
         if (Thread.currentThread() instanceof Agent) {
@@ -45,11 +50,12 @@ public class Tisch {
                 /* DEMO MODE */
                 try {
                     wait(FLUSS);
+                    notifyAll();
+                    wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
 
-                notifyAll();
             } else {
                 try {
                     wait();
@@ -60,15 +66,19 @@ public class Tisch {
         } else if (Thread.currentThread() instanceof Raucher) {
             if (!getAktuelleZutaten().isEmpty() && ((Raucher) Thread.currentThread()).kannRauchen(getAktuelleZutaten())) {
                 leereTisch((Raucher) Thread.currentThread());
+                rauchend = true;
 
                 /* DEMO MODE */
                 try {
                     wait(FLUSS);
+                    System.out.println(String.format(SmokerUtil.ANSI_RED + "%s ist fertig mit dem Rauchen." + SmokerUtil.ANSI_RESET, Thread.currentThread()));
+                    rauchend = false;
+                    notifyAll();
+                    wait();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
 
-                notifyAll();
             } else {
                 try {
                     wait();

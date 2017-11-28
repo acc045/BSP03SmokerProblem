@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         /* LAUFZEIT */
-        final int DAUER = 3000;
+        final int DAUER = 10000;
 
 	    int anzahlRaucher = 3;
 	    int anzahlAgenten = 2;
