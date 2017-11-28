@@ -27,6 +27,7 @@ public class Main {
             // nichts
         }
 
+        System.out.println(String.format(SmokerUtil.ANSI_RED + "\nDie Raucherpause ist vorbei." + SmokerUtil.ANSI_RESET));
         /* Threads beenden */
         for (Agent a : tisch.agenten) {
             a.interrupt();
@@ -34,5 +35,20 @@ public class Main {
         for (Raucher r : tisch.raucher) {
             r.interrupt();
         }
+        for (Agent a : tisch.agenten) {
+            try {
+                a.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        for (Raucher r : tisch.raucher) {
+            try {
+                r.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        System.out.println(String.format(SmokerUtil.ANSI_RED + "\nDer Tisch ist leer, bis zum nächsten Mal!" + SmokerUtil.ANSI_RESET));
     }
 }
