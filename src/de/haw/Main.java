@@ -9,6 +9,12 @@ public class Main {
 	    int anzahlRaucher = 3;
 	    int anzahlAgenten = 2;
 
+        System.out.println(SmokerUtil.ANSI_RED + "Eine neue Raucher Simulation wird gestartet." + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Raucher:       " + anzahlRaucher + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Agenten:       " + anzahlAgenten + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Länge der Raucherpause:   " + DAUER + SmokerUtil.ANSI_RESET);
+        System.out.println("\n");
+
         Tisch tisch = new Tisch(anzahlRaucher,anzahlAgenten);
 
         for (Agent a : tisch.agenten) {
