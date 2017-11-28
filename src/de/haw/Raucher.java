@@ -17,10 +17,8 @@ public class Raucher extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()) {
-            tisch.begutachteTisch();
+            tisch.leereTisch(this);
         }
-
-        System.out.println(String.format(SmokerUtil.ANSI_GREEN + "\n%s verlässt den Tisch. (interrupt)" + SmokerUtil.ANSI_RESET, this));
     }
 
     public boolean kannRauchen(ArrayList<Zutat> zutaten) {

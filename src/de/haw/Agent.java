@@ -15,10 +15,8 @@ public class Agent extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()) {
-            tisch.begutachteTisch();
+            tisch.legeZutatenHin(this);
         }
-
-        System.out.println(String.format(SmokerUtil.ANSI_GREEN + "\n%s verlässt den Tisch. (interrupt)" + SmokerUtil.ANSI_RESET, this));
     }
 
     @Override

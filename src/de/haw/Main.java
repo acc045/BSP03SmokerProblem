@@ -10,9 +10,9 @@ public class Main {
 	    int anzahlAgenten = 2;
 
         System.out.println(SmokerUtil.ANSI_RED + "Eine neue Raucher Simulation wird gestartet." + SmokerUtil.ANSI_RESET);
-        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Raucher:       " + anzahlRaucher + SmokerUtil.ANSI_RESET);
-        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Agenten:       " + anzahlAgenten + SmokerUtil.ANSI_RESET);
-        System.out.println(SmokerUtil.ANSI_RED + "Länge der Raucherpause:   " + DAUER + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Raucher:                  " + anzahlRaucher + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Anzahl der Agenten:                  " + anzahlAgenten + SmokerUtil.ANSI_RESET);
+        System.out.println(SmokerUtil.ANSI_RED + "Länge der Raucherpause (Sekunden):   " + DAUER/1000 + SmokerUtil.ANSI_RESET);
         System.out.println("\n");
 
         Tisch tisch = new Tisch(anzahlRaucher,anzahlAgenten);
@@ -41,20 +41,13 @@ public class Main {
         for (Raucher r : tisch.raucher) {
             r.interrupt();
         }
-        for (Agent a : tisch.agenten) {
-            try {
-                a.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        for (Raucher r : tisch.raucher) {
-            try {
-                r.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+
         System.out.println(String.format(SmokerUtil.ANSI_RED + "\nDer Tisch ist leer, bis zum nächsten Mal!" + SmokerUtil.ANSI_RESET));
     }
 }
